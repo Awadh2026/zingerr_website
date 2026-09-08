@@ -48,6 +48,24 @@ const getDate = (order) => {
   return Number.isNaN(date.getTime()) ? String(dateValue) : date.toLocaleString()
 }
 
+const getSortTimestamp = (order) => {
+  const dateValue = pickValue(order, ['created_at', 'order_date', 'date', 'updated_at'])
+  if (!dateValue) return Number.MAX_SAFE_INTEGER
+  const date = new Date(dateValue)
+  return Number.isNaN(date.getTime()) ? Number.MAX_SAFE_INTEGER : date.getTime()
+}
+
+const compareOrdersDescending = (a, b) => {
+  const aTime = getSortTimestamp(a)
+  const bTime = getSortTimestamp(b)
+
+  if (aTime !== bTime) return bTime - aTime
+
+  const aId = String(getOrderId(a))
+  const bId = String(getOrderId(b))
+  return bId.localeCompare(aId, undefined, { numeric: true, sensitivity: 'base' })
+}
+
 export default function AdminOrders() {
   useSEO({
     title: "Admin Orders - Awadh Info Solution",
@@ -101,12 +119,14 @@ export default function AdminOrders() {
   }, [itemsPerPage, selectedStatus])
 
   const filteredOrders = useMemo(() => {
-    if (selectedStatus === 'all') return orders
+    const matchingOrders = selectedStatus === 'all'
+      ? [...orders]
+      : orders.filter((order) => {
+          const status = String(getStatus(order)).toLowerCase()
+          return status === selectedStatus.toLowerCase()
+        })
 
-    return orders.filter((order) => {
-      const status = String(getStatus(order)).toLowerCase()
-      return status === selectedStatus.toLowerCase()
-    })
+    return matchingOrders.sort(compareOrdersDescending)
   }, [orders, selectedStatus])
 
   const totalPages = Math.max(1, Math.ceil(filteredOrders.length / itemsPerPage))
