@@ -80,6 +80,8 @@ export default function AdminOrders() {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(30)
   const [selectedStatus, setSelectedStatus] = useState('all')
+  const [dateFrom, setDateFrom] = useState('')
+  const [dateTo, setDateTo] = useState('')
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -116,18 +118,28 @@ export default function AdminOrders() {
 
   useEffect(() => {
     setCurrentPage(1)
-  }, [itemsPerPage, selectedStatus])
+  }, [itemsPerPage, selectedStatus, dateFrom, dateTo])
 
   const filteredOrders = useMemo(() => {
-    const matchingOrders = selectedStatus === 'all'
-      ? [...orders]
-      : orders.filter((order) => {
-          const status = String(getStatus(order)).toLowerCase()
-          return status === selectedStatus.toLowerCase()
-        })
+    const fromTimestamp = dateFrom ? new Date(`${dateFrom}T00:00:00`).getTime() : null
+    const toTimestamp = dateTo ? new Date(`${dateTo}T23:59:59.999`).getTime() : null
+
+    const matchingOrders = orders.filter((order) => {
+      if (selectedStatus !== 'all') {
+        const status = String(getStatus(order)).toLowerCase()
+        if (status !== selectedStatus.toLowerCase()) return false
+      }
+
+      const orderTimestamp = getSortTimestamp(order)
+      if ((fromTimestamp !== null || toTimestamp !== null) && orderTimestamp === Number.MAX_SAFE_INTEGER) return false
+      if (fromTimestamp !== null && orderTimestamp < fromTimestamp) return false
+      if (toTimestamp !== null && orderTimestamp > toTimestamp) return false
+
+      return true
+    })
 
     return matchingOrders.sort(compareOrdersDescending)
-  }, [orders, selectedStatus])
+  }, [orders, selectedStatus, dateFrom, dateTo])
 
   const totalPages = Math.max(1, Math.ceil(filteredOrders.length / itemsPerPage))
   const paginatedOrders = filteredOrders.slice(
@@ -293,16 +305,50 @@ export default function AdminOrders() {
               {selectedStatus === 'all' ? 'All order fields' : `${selectedStatus.charAt(0).toUpperCase() + selectedStatus.slice(1)} orders`}
             </div>
 
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <span>Rows per page</span>
-              <select
-                value={itemsPerPage}
-                onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                className="px-2 py-1 border border-gray-300 rounded-md bg-white"
-              >
-                <option value={30}>30</option>
-                <option value={50}>50</option>
-              </select>
+            <div className="flex flex-col sm:flex-row sm:items-end gap-3 text-sm text-gray-600">
+              <label className="flex flex-col gap-1">
+                <span>From date</span>
+                <input
+                  type="date"
+                  value={dateFrom}
+                  max={dateTo || undefined}
+                  onChange={(e) => setDateFrom(e.target.value)}
+                  className="px-2 py-1 border border-gray-300 rounded-md bg-white"
+                />
+              </label>
+              <label className="flex flex-col gap-1">
+                <span>To date</span>
+                <input
+                  type="date"
+                  value={dateTo}
+                  min={dateFrom || undefined}
+                  onChange={(e) => setDateTo(e.target.value)}
+                  className="px-2 py-1 border border-gray-300 rounded-md bg-white"
+                />
+              </label>
+              {(dateFrom || dateTo) && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDateFrom('')
+                    setDateTo('')
+                  }}
+                  className="px-3 py-2 text-gray-700 border border-gray-300 rounded-md bg-white hover:bg-gray-100"
+                >
+                  Clear dates
+                </button>
+              )}
+              <label className="flex items-center gap-2 sm:ml-1 sm:pb-1">
+                <span>Rows per page</span>
+                <select
+                  value={itemsPerPage}
+                  onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                  className="px-2 py-1 border border-gray-300 rounded-md bg-white"
+                >
+                  <option value={30}>30</option>
+                  <option value={50}>50</option>
+                </select>
+              </label>
             </div>
           </div>
 
