@@ -155,6 +155,9 @@ export default function AdminCategories() {
             <button onClick={() => navigate('/admin/products')} className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
               Products
             </button>
+            <button onClick={() => navigate('/admin/offers')} className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
+              Offers
+            </button>
             <button onClick={() => navigate('/admin/orders')} className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
               Orders
             </button>

@@ -11,6 +11,7 @@ import RefundPolicy from "./pages/RefundPolicy";
 import DeleteAccount from "./pages/DeleteAccount";
 import AdminProducts from "./pages/AdminProducts";
 import AdminCategories from "./pages/AdminCategories";
+import AdminOffers from "./pages/AdminOffers";
 import AdminProfiles from "./pages/AdminProfiles";
 import AdminOrders from "./pages/AdminOrders";
 import AdminOrderDetails from "./pages/AdminOrderDetails";
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin/products" element={<AdminProducts />} />
           <Route path="/admin/categories" element={<AdminCategories />} />
+          <Route path="/admin/offers" element={<AdminOffers />} />
           <Route path="/admin/profiles" element={<AdminProfiles />} />
           <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="/admin/orders/:id" element={<AdminOrderDetails />} />
