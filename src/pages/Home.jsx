@@ -30,11 +30,12 @@ const zingerrFeatures = [
 ];
 
 const process = [
-  ["Discover", "Understand your business, users, goals, and requirements."],
-  ["Plan", "Agree on features, technology, priorities, and project scope."],
-  ["Design", "Shape intuitive interfaces, user flows, and a clear product experience."],
-  ["Develop", "Build the solution, integrate services, and test key workflows."],
-  ["Launch & Support", "Deploy to production and provide ongoing maintenance."],
+  ["Requirements", "Understand the business, users, and project scope."],
+  ["UI/UX", "Plan the product structure, user flows, and interface."],
+  ["Development", "Build the product and integrate its services."],
+  ["Testing", "Check key workflows and fix issues before release."],
+  ["Deployment", "Release the product to its production environment."],
+  ["Maintenance", "Support updates, fixes, and improvements after launch."],
 ];
 
 const reasons = [
@@ -94,13 +95,13 @@ export default function Home() {
       <section className="overflow-hidden bg-[#153f30] text-white">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 py-16 md:grid-cols-[1.15fr_0.85fr] md:py-24 lg:px-10">
           <div>
-            <p className="mb-6 text-xs font-bold uppercase tracking-[0.18em] text-[#d4ee75]">Awadh Info Solution Private Limited</p>
-            <h1 className="font-serif text-6xl leading-[0.98] md:text-8xl">Build.<br />Launch.<br /><span className="text-[#d4ee75]">Grow.</span></h1>
-            <h2 className="mt-8 max-w-2xl text-2xl font-semibold leading-tight md:text-3xl">End-to-End Digital Solutions for Your Business</h2>
+            <p className="mb-6 text-xs font-bold uppercase tracking-[0.18em] text-[#d4ee75]">Build. Launch. Grow.</p>
+            <h1 className="max-w-3xl font-serif text-5xl leading-[1.02] md:text-7xl">Turn Your Ideas Into <span className="text-[#d4ee75]">Digital Products</span></h1>
+            <h2 className="mt-7 max-w-2xl text-2xl font-semibold leading-tight md:text-3xl">End-to-End Digital Solutions for Growing Businesses</h2>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-[#d4e3da]">We design and develop modern websites, web applications, mobile apps, and custom software solutions that help businesses grow digitally.</p>
             <div className="mt-9 flex flex-wrap gap-4">
               <a href="mailto:admin@awadhinfosolution.in?subject=Free%20consultation" className="inline-flex min-h-12 items-center bg-[#d4ee75] px-6 font-semibold text-[#18382b] transition hover:bg-white">Get a Free Consultation <span className="ml-3" aria-hidden="true">↗</span></a>
-              <button type="button" onClick={() => document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })} className="inline-flex min-h-12 items-center border border-white/40 px-6 font-semibold text-white transition hover:border-white">View Our Services <span className="ml-3" aria-hidden="true">↓</span></button>
+              <button type="button" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })} className="inline-flex min-h-12 items-center border border-white/40 px-6 font-semibold text-white transition hover:border-white">View Our Work <span className="ml-3" aria-hidden="true">↓</span></button>
             </div>
           </div>
           <div className="relative border-l border-[#6f9480] py-8 pl-8 md:pl-12">
@@ -120,8 +121,17 @@ export default function Home() {
       </section>
 
       <section className="border-b border-[#d8e1d8] bg-white" aria-label="Our capabilities">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-5 px-6 py-6 text-sm font-semibold text-[#3b5748] sm:grid-cols-4 lg:px-10">
-          {["Web Development", "Mobile Apps", "Web Applications", "Ongoing Support"].map((item, index) => <div key={item} className="flex items-center gap-3"><span className="font-serif text-[#df704c]">0{index + 1}</span>{item}</div>)}
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-5 px-6 py-6 text-sm font-semibold text-[#3b5748] sm:grid-cols-3 lg:grid-cols-5 lg:px-10">
+          {["Website Development", "Web Apps", "Mobile Apps", "API & Backend", "Maintenance"].map((item, index) => <div key={item} className="flex items-center gap-3"><span className="font-serif text-[#df704c]">0{index + 1}</span>{item}</div>)}
+        </div>
+      </section>
+
+      <section className="border-b border-[#d8e1d8] bg-white" aria-label="Experience and availability">
+        <div className="mx-auto grid max-w-7xl gap-5 px-6 py-6 text-sm font-semibold text-[#3b5748] sm:grid-cols-2 lg:grid-cols-4 lg:px-10">
+          <span>6+ years of professional experience</span>
+          <a href="https://play.google.com/store/apps/details?id=in.awadhinfosolution.zingerr" target="_blank" rel="noopener noreferrer" className="hover:text-[#26734e]">Production app on Google Play ↗</a>
+          <span>End-to-end product development</span>
+          <span>Rourkela, Odisha</span>
         </div>
       </section>
 
@@ -174,8 +184,9 @@ export default function Home() {
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#d4ee75]">Featured project · Production case study</p>
             <div className="mt-7 flex h-24 w-24 items-center justify-center bg-white p-2"><img src={zingerrLogo} alt="Zingerr app logo" className="h-full w-full object-contain" /></div>
             <h2 className="mt-5 font-serif text-5xl">Zingerr</h2>
-            <p className="mt-2 text-lg font-semibold text-[#b4d6bf]">Hyperlocal Commerce &amp; Delivery Platform</p>
+            <p className="mt-2 text-lg font-semibold text-[#b4d6bf]">Hyperlocal Commerce Platform</p>
             <p className="mt-4 max-w-md leading-7 text-[#d4e3da]">Developed by Awadh Info Solution Private Limited, Zingerr is a live product bringing customer ordering, payments, delivery workflows, and administration together.</p>
+            <p className="mt-5 text-sm font-semibold text-[#d4ee75]">Flutter · Supabase · Firebase · Razorpay</p>
             <Link to="/products/zingerr" className="mt-7 inline-flex min-h-12 items-center border border-[#b4d6bf] px-5 font-semibold text-white transition hover:bg-white hover:text-[#153f30]">View Zingerr <span className="ml-3" aria-hidden="true">→</span></Link>
           </div>
           <div className="grid content-start gap-x-8 sm:grid-cols-2">
@@ -190,7 +201,7 @@ export default function Home() {
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#26734e]">A clear path from idea to release</p>
             <h2 className="mt-3 font-serif text-4xl md:text-5xl">Our Process</h2>
           </div>
-          <div className="mt-10 grid border-t border-[#cbd8cc] sm:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-10 grid border-t border-[#cbd8cc] sm:grid-cols-2 lg:grid-cols-6">
             {process.map(([title, detail], index) => <article key={title} className="border-b border-[#cbd8cc] py-6 pr-6 lg:border-b-0 lg:border-r lg:px-5 lg:first:pl-0 lg:last:border-r-0"><p className="font-serif text-3xl text-[#df704c]">0{index + 1}</p><h3 className="mt-4 font-semibold text-[#17462f]">{title}</h3><p className="mt-2 text-sm leading-6 text-[#617167]">{detail}</p></article>)}
           </div>
         </div>
