@@ -35,7 +35,7 @@ export default function App() {
   return (
     <AuthProvider>
       <div className="min-h-screen bg-app-bg text-app-body flex flex-col">
-        {showSiteChrome && <Navbar />}
+        {showSiteChrome && <Navbar variant="zingerr" />}
 
         <Routes>
           <Route path="/" element={<Home />} />
@@ -55,7 +55,7 @@ export default function App() {
           <Route path="/delivery/orders" element={<DeliveryOrders />} />
         </Routes>
 
-        {showSiteChrome && <Footer />}
+        {showSiteChrome && <Footer variant="zingerr" />}
       </div>
     </AuthProvider>
   );

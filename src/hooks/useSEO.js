@@ -1,14 +1,19 @@
 import { Helmet } from "react-helmet-async";
+import shareImage from "../assets/zingerr_Transparent.png";
 
 export function useSEO({
-  title = "Zingerr (Zinger) App by Awadh Info Solution",
-  description = "Zingerr, also searched as Zinger, by Awadh Info Solution is a powerful app for streamlining orders, organizing workflows, and helping modern teams work faster.",
-  keywords = "Zingerr, Zinger, Zingerr app, Zinger app, Awadh Info Solution, order management app, workflow management app",
-  image = "https://www.awadhinfosolution.in/og-image.png",
+  title = "Awadh Info Solution | Website, Web App & Mobile App Development",
+  description = "Awadh Info Solution provides end-to-end website, web application, mobile app, API development and maintenance services for businesses in India.",
+  keywords = "Awadh Info Solution, software development company, website development, web application development, mobile app development, API development",
+  image = shareImage,
   url = "https://www.awadhinfosolution.in/",
   type = "website",
   author = "Awadh Info Solution",
 } = {}) {
+  const canonicalUrl = new URL(url, "https://www.awadhinfosolution.in/");
+  canonicalUrl.hash = "";
+  const absoluteImage = new URL(image, "https://www.awadhinfosolution.in/").href;
+
   return (
     <Helmet>
       <title>{title}</title>
@@ -18,21 +23,21 @@ export function useSEO({
       
       {/* Open Graph */}
       <meta property="og:type" content={type} />
-      <meta property="og:url" content={url} />
+      <meta property="og:url" content={canonicalUrl.href} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
+      <meta property="og:image" content={absoluteImage} />
       <meta property="og:site_name" content="Awadh Info Solution" />
       
       {/* Twitter Card */}
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={url} />
+      <meta property="twitter:url" content={canonicalUrl.href} />
       <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={image} />
+      <meta property="twitter:image" content={absoluteImage} />
       
       {/* Canonical */}
-      <link rel="canonical" href={url} />
+      <link rel="canonical" href={canonicalUrl.href} />
     </Helmet>
   );
 }

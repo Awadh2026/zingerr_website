@@ -1,62 +1,87 @@
+import { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSEO, useSchemaMarkup } from "../hooks/useSEO.jsx";
-import { Link } from "react-router-dom";
 import zingerrLogo from "../assets/zingerr_Transparent.png";
 
 const services = [
-  "Custom websites, business websites, portals, and e-commerce solutions",
-  "Responsive web applications, dashboards, and role-based management systems",
-  "Custom Android and cross-platform mobile applications",
-  "REST APIs, databases, authentication, and cloud integrations",
-  "Payment gateways, Google Maps and location, OTP/SMS, and notifications",
-  "Deployment, production support, bug fixing, upgrades, and long-term maintenance",
+  { title: "Website Development", intro: "Create a clear, credible online presence that moves visitors to action.", items: ["Business & corporate websites", "E-commerce websites", "Landing pages"] },
+  { title: "Web Application Development", intro: "Build responsive software around the way your business works.", items: ["Custom web applications", "Admin dashboards", "CRM / ERP solutions", "SaaS platforms"] },
+  { title: "Mobile App Development", intro: "Take your product to customers and teams on the devices they use every day.", items: ["Android applications", "iOS applications", "Flutter applications", "App deployment & maintenance"] },
+  { title: "Backend & API Development", intro: "Connect interfaces, data, and third-party services with reliable backend systems.", items: ["REST APIs", "Database development", "Authentication", "Payment integration"] },
+  { title: "Maintenance & Support", intro: "Keep existing products healthy, secure, and improving after launch.", items: ["Bug fixing", "Performance optimization", "Security updates", "Feature upgrades"] },
+  { title: "Deployment & Cloud", intro: "Prepare, release, and support your product in a production environment.", items: ["Domain & hosting", "Cloud deployment", "CI/CD", "Production support"] },
 ];
 
-const capabilities = [
-  ["Web", "React.js · Next.js · JavaScript · HTML5 · CSS3"],
-  ["Backend", "Node.js · REST APIs · PostgreSQL · Supabase · Cloud services"],
-  ["Mobile", "Flutter · Android · Firebase"],
-  ["Integrations", "Razorpay · Google Maps · FCM · OTP/SMS"],
-  ["Product systems", "Authentication · RBAC · Orders · Payments · Admin dashboards"],
-  ["Deployment & support", "Play Store · Web hosting · DNS/CDN · Maintenance · Monitoring"],
+const technologies = [
+  ["Frontend", "React · Next.js · JavaScript · HTML · CSS", "Build responsive websites and interactive user interfaces for business products."],
+  ["Backend", "Node.js · REST APIs", "Implement application logic and connect web and mobile experiences to services."],
+  ["Mobile", "Flutter · Android · iOS", "Build cross-platform Flutter apps and mobile applications for Android and iOS."],
+  ["Database & Cloud", "Supabase · Firebase · PostgreSQL · MongoDB · AWS", "Choose databases for application data and use AWS for cloud infrastructure and deployment."],
+  ["Payments & Integrations", "Razorpay · Firebase · Third-party APIs", "Connect checkout, notifications, and external services to the product workflow."],
 ];
 
-const productFeatures = [
-  "Customer ordering with product catalogue, cart, and order management",
-  "Digital payment integration and transaction handling",
-  "Delivery-partner workflow with order status and delivery PIN",
-  "Role-based access for customers, delivery partners, and administrators",
-  "Push notifications and FCM token management",
-  "Production deployment, database management, product updates, and ongoing support",
+const zingerrFeatures = [
+  "Customer mobile application with product and category management",
+  "Cart, checkout, online payments, and order tracking",
+  "Delivery-partner management and delivery PIN workflow",
+  "Admin dashboard and role-based access",
+  "Push notifications and backend/database integration",
+  "Production deployment and ongoing product maintenance",
 ];
 
-const clientBenefits = [
-  ["End-to-end ownership", "From idea and UI/UX through development, deployment, and maintenance."],
-  ["Full-stack capability", "Websites, web apps, mobile apps, backend systems, APIs, and integrations."],
-  ["Modern technology", "React.js, Next.js, JavaScript, Node.js, Flutter, PostgreSQL, Supabase, and Firebase."],
-  ["Production experience", "Experience building and maintaining a live commerce and delivery application."],
-  ["Flexible engagement", "Project-based product development or monthly maintenance and support."],
+const process = [
+  ["Discover", "Understand your business, users, goals, and requirements."],
+  ["Plan", "Agree on features, technology, priorities, and project scope."],
+  ["Design", "Shape intuitive interfaces, user flows, and a clear product experience."],
+  ["Develop", "Build the solution, integrate services, and test key workflows."],
+  ["Launch & Support", "Deploy to production and provide ongoing maintenance."],
 ];
 
-const engagementOptions = [
-  ["New product", "Build from requirements, UI, frontend, backend, integrations, and deployment."],
-  ["Existing app or website", "Bug fixing, new features, performance improvements, and modernization."],
-  ["Maintenance", "Monthly technical support, updates, monitoring, and ongoing improvements."],
+const reasons = [
+  ["End-to-end development", "From the first idea through production and ongoing support."],
+  ["Modern technology", "Solutions designed to be maintainable and ready to evolve."],
+  ["Business-focused approach", "Technology choices and features aligned with your requirements."],
+  ["Transparent development", "Clear milestones, priorities, and communication throughout the work."],
+  ["Post-launch support", "Maintenance and continuous improvements after release."],
 ];
 
 export default function Home() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   useSEO({
-    title: "Awadh Info Solution | Founder-led Software Development",
-    description: "Founder-led website, web app, mobile app, backend, and product development by Shantanu Kumar Kushwaha, with 6+ years of professional experience.",
-    keywords: "Awadh Info Solution, software development, website development, web app development, mobile app development, Zingerr",
+    title: "Awadh Info Solution | Website, Web App & Mobile App Development",
+    description: "Awadh Info Solution provides end-to-end website, web application, mobile app, API development and maintenance services for businesses in India.",
+    keywords: "Awadh Info Solution, software development company, website development, web application development, iOS app development, Android app development, Flutter, API development, MongoDB, AWS, Odisha, India",
+    image: new URL(zingerrLogo, window.location.origin).href,
     url: "https://www.awadhinfosolution.in/",
   });
+
+  useEffect(() => {
+    const targetId = location.state?.scrollTo;
+    if (!targetId) return undefined;
+
+    const frameId = window.requestAnimationFrame(() => {
+      document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
+      navigate("/", { replace: true, state: null });
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [location.key, location.state, navigate]);
 
   useSchemaMarkup({
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Awadh Info Solution Pvt Ltd",
+    name: "Awadh Info Solution Private Limited",
     url: "https://www.awadhinfosolution.in/",
-    description: "Founder-led software product development, from requirements and UI through integrations, deployment, and ongoing support.",
+    description: "End-to-end website, web application, mobile app, API development, and maintenance services for businesses.",
+    email: "admin@awadhinfosolution.in",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Rourkela",
+      addressRegion: "Odisha",
+      addressCountry: "IN",
+    },
     founder: {
       "@type": "Person",
       name: "Shantanu Kumar Kushwaha",
@@ -65,141 +90,152 @@ export default function Home() {
   });
 
   return (
-    <main className="flex-1 bg-[#f4f7f2] text-[#182a22]">
+    <main className="flex-1 bg-[#f5f7f4] text-[#172820]">
       <section className="overflow-hidden bg-[#153f30] text-white">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-16 md:grid-cols-[1.2fr_0.8fr] md:py-24 lg:px-10">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 py-16 md:grid-cols-[1.15fr_0.85fr] md:py-24 lg:px-10">
           <div>
-            <p className="mb-6 text-xs font-bold uppercase tracking-[0.18em] text-[#b4d6bf]">Awadh Info Solution Pvt. Ltd.</p>
-            <h1 className="max-w-3xl font-serif text-5xl leading-[1.08] md:text-7xl">Software product development, from first idea to launch.</h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-[#d4e3da]">Founder-led development for businesses that need a capable, hands-on technology partner, from the first interface through backend integration and long-term support.</p>
+            <p className="mb-6 text-xs font-bold uppercase tracking-[0.18em] text-[#d4ee75]">Awadh Info Solution Private Limited</p>
+            <h1 className="font-serif text-6xl leading-[0.98] md:text-8xl">Build.<br />Launch.<br /><span className="text-[#d4ee75]">Grow.</span></h1>
+            <h2 className="mt-8 max-w-2xl text-2xl font-semibold leading-tight md:text-3xl">End-to-End Digital Solutions for Your Business</h2>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#d4e3da]">We design and develop modern websites, web applications, mobile apps, and custom software solutions that help businesses grow digitally.</p>
             <div className="mt-9 flex flex-wrap gap-4">
-              <button type="button" onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} className="inline-flex min-h-12 items-center bg-[#d4ee75] px-6 font-semibold text-[#18382b] transition hover:bg-white">Discuss your project <span className="ml-3" aria-hidden="true">↓</span></button>
-              <button type="button" onClick={() => document.getElementById("zingerr")?.scrollIntoView({ behavior: "smooth" })} className="inline-flex min-h-12 items-center border border-white/40 px-6 font-semibold text-white transition hover:border-white">View live product <span className="ml-3" aria-hidden="true">↓</span></button>
+              <a href="mailto:admin@awadhinfosolution.in?subject=Free%20consultation" className="inline-flex min-h-12 items-center bg-[#d4ee75] px-6 font-semibold text-[#18382b] transition hover:bg-white">Get a Free Consultation <span className="ml-3" aria-hidden="true">↗</span></a>
+              <button type="button" onClick={() => document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })} className="inline-flex min-h-12 items-center border border-white/40 px-6 font-semibold text-white transition hover:border-white">View Our Services <span className="ml-3" aria-hidden="true">↓</span></button>
             </div>
           </div>
-          <div className="border-l border-[#6f9480] pl-7 md:pl-10">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#b4d6bf]">Founder &amp; software developer</p>
-            <p className="mt-4 font-serif text-3xl leading-tight md:text-4xl">Shantanu Kumar Kushwaha</p>
-            <p className="mt-5 text-[#d4e3da]">6+ years of professional experience</p>
-            <div className="mt-8 h-px w-full bg-[#6f9480]" />
-            <p className="mt-5 text-sm leading-6 text-[#d4e3da]">Websites · Web apps · Mobile apps · Backend &amp; APIs · Maintenance</p>
+          <div className="relative border-l border-[#6f9480] py-8 pl-8 md:pl-12">
+            <span className="absolute left-0 top-8 h-16 w-1 -translate-x-1/2 bg-[#e87952]" />
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#b4d6bf]">One team, the complete journey</p>
+            <div className="mt-7 space-y-5">
+              {[["01", "Websites & web apps"], ["02", "Mobile products"], ["03", "Backend & integrations"], ["04", "Launch & ongoing support"]].map(([number, label]) => (
+                <div key={number} className="flex items-center gap-4 border-b border-[#557766] pb-4">
+                  <span className="font-serif text-sm text-[#d4ee75]">{number}</span>
+                  <span className="text-lg font-medium">{label}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-8 text-sm leading-6 text-[#d4e3da]">Founder-led by Shantanu Kumar Kushwaha · 6+ years of professional experience</p>
           </div>
         </div>
       </section>
 
-      <section className="border-b border-[#d8e1d8] bg-white">
-        <div className="mx-auto grid max-w-7xl gap-5 px-6 py-6 text-sm font-medium text-[#3b5748] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:px-10">
-          <span>Website development</span><span>Web app development</span><span>App development</span><span>Backend &amp; APIs</span><span>Maintenance &amp; support</span>
+      <section className="border-b border-[#d8e1d8] bg-white" aria-label="Our capabilities">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-5 px-6 py-6 text-sm font-semibold text-[#3b5748] sm:grid-cols-4 lg:px-10">
+          {["Web Development", "Mobile Apps", "Web Applications", "Ongoing Support"].map((item, index) => <div key={item} className="flex items-center gap-3"><span className="font-serif text-[#df704c]">0{index + 1}</span>{item}</div>)}
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-[0.75fr_1.25fr] md:py-20 lg:px-10">
-        <div>
-          <p className="mt-2 font-semibold text-[#26734e]">Founder and software developer</p>
-          <p className="mt-5 font-serif text-2xl text-[#17462f]">Shantanu Kumar Kushwaha</p>
-        </div>
-        <div className="max-w-3xl text-lg leading-8 text-[#52645a]">
-          <p>With 6+ years of professional experience, Shantanu focuses on building practical digital products for businesses. He works across the full product journey, from idea and UI implementation through backend integration, payments, notifications, deployment, and ongoing maintenance.</p>
-          <p className="mt-5 text-sm font-semibold text-[#344d3d]">One accountable development partner, involved from the first decisions through production support.</p>
-        </div>
-      </section>
-
-      <section className="bg-[#e7eee6]">
+      <section id="services" className="scroll-mt-24 bg-[#e9efea]">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-20 lg:px-10">
-          <div className="max-w-2xl">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#26734e]">Our services</p>
-            <h2 className="mt-3 font-serif text-4xl md:text-5xl">What we do</h2>
-            <p className="mt-4 leading-7 text-[#617167]">We design, develop, launch, and support software products that help businesses get their work done.</p>
+          <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#26734e]">What we do</p>
+              <h2 className="mt-3 font-serif text-4xl md:text-5xl">Our Services</h2>
+            </div>
+            <p className="max-w-lg leading-7 text-[#617167]">End-to-end software development for businesses: from a first website or product idea to integrations, launch, and long-term care.</p>
           </div>
-          <div className="mt-10 grid gap-x-12 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {services.map((service, index) => (
-              <div key={service} className="grid grid-cols-[42px_1fr] gap-4 border-t border-[#c6d4c8] py-5">
-                <span className="font-serif text-xl text-[#639174]">0{index + 1}</span>
-                <p className="leading-7 text-[#344d3d]">{service}</p>
-              </div>
+              <article key={service.title} className="border border-[#d0dbd1] bg-white p-6 transition hover:border-[#26734e]">
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#df704c]">Service 0{index + 1}</p>
+                <h3 className="mt-3 font-serif text-2xl text-[#17462f]">{service.title}</h3>
+                <p className="mt-3 min-h-14 leading-6 text-[#617167]">{service.intro}</p>
+                <ul className="mt-5 space-y-2 border-t border-[#e0e7e0] pt-4 text-sm text-[#344d3d]">
+                  {service.items.map((item) => <li key={item} className="flex gap-2"><span className="text-[#278251]" aria-hidden="true">/</span>{item}</li>)}
+                </ul>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16 md:py-20 lg:px-10">
-        <div className="max-w-2xl">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#26734e]">Core technology &amp; capabilities</p>
-          <h2 className="mt-3 font-serif text-4xl md:text-5xl">A practical full-stack toolkit.</h2>
-        </div>
-        <div className="mt-10 grid border-t border-[#cbd8cc] sm:grid-cols-2 lg:grid-cols-3">
-          {capabilities.map(([label, details]) => (
-            <div key={label} className="border-b border-[#cbd8cc] py-6 sm:pr-6 lg:pr-8">
-              <h3 className="font-semibold text-[#17462f]">{label}</h3>
-              <p className="mt-2 leading-7 text-[#617167]">{details}</p>
-            </div>
-          ))}
+      <section id="technologies" className="scroll-mt-24">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20 lg:px-10">
+          <div className="max-w-2xl">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#26734e]">Built with the right tools</p>
+            <h2 className="mt-3 font-serif text-4xl md:text-5xl">Technologies We Work With</h2>
+            <p className="mt-4 leading-7 text-[#617167]">We choose technologies to fit the product, its users, and the way it needs to grow.</p>
+          </div>
+          <div className="mt-10 grid border-t border-[#cbd8cc] md:grid-cols-2">
+            {technologies.map(([label, stack, details]) => (
+              <article key={label} className="border-b border-[#cbd8cc] py-6 md:pr-10">
+                <h3 className="font-semibold text-[#17462f]">{label}</h3>
+                <p className="mt-2 font-medium text-[#26734e]">{stack}</p>
+                <p className="mt-2 max-w-xl leading-7 text-[#617167]">{details}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section id="zingerr" className="bg-[#153f30] text-white">
+      <section id="projects" className="scroll-mt-24 bg-[#153f30] text-white">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-[0.8fr_1.2fr] md:py-20 lg:px-10">
           <div className="flex flex-col items-start">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#b4d6bf]">Live product case study</p>
-            <div className="mt-7 flex h-24 w-24 items-center justify-center bg-white p-2">
-              <img src={zingerrLogo} alt="Zingerr" className="h-full w-full object-contain" />
-            </div>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#d4ee75]">Featured project · Production case study</p>
+            <div className="mt-7 flex h-24 w-24 items-center justify-center bg-white p-2"><img src={zingerrLogo} alt="Zingerr app logo" className="h-full w-full object-contain" /></div>
             <h2 className="mt-5 font-serif text-5xl">Zingerr</h2>
-            <p className="mt-4 max-w-md leading-7 text-[#d4e3da]">A hyperlocal commerce and doorstep-delivery platform built and maintained by the team, demonstrating hands-on experience with a live production application.</p>
-            <Link to="/products/zingerr" className="mt-7 inline-flex min-h-12 items-center border border-[#b4d6bf] px-5 font-semibold text-white transition hover:bg-white hover:text-[#153f30]">Explore Zingerr <span className="ml-3" aria-hidden="true">↗</span></Link>
+            <p className="mt-2 text-lg font-semibold text-[#b4d6bf]">Hyperlocal Commerce &amp; Delivery Platform</p>
+            <p className="mt-4 max-w-md leading-7 text-[#d4e3da]">Developed by Awadh Info Solution Private Limited, Zingerr is a live product bringing customer ordering, payments, delivery workflows, and administration together.</p>
+            <Link to="/products/zingerr" className="mt-7 inline-flex min-h-12 items-center border border-[#b4d6bf] px-5 font-semibold text-white transition hover:bg-white hover:text-[#153f30]">View Zingerr <span className="ml-3" aria-hidden="true">→</span></Link>
           </div>
-          <div>
-            <p className="text-sm font-semibold text-[#b4d6bf]">Built for the real flow of local commerce</p>
-            <ul className="mt-4 divide-y divide-[#557766]">
-              {productFeatures.map((feature) => <li key={feature} className="py-4 leading-6 text-[#e0ebe3]">{feature}</li>)}
-            </ul>
+          <div className="grid content-start gap-x-8 sm:grid-cols-2">
+            {zingerrFeatures.map((feature, index) => <div key={feature} className="flex gap-4 border-t border-[#557766] py-5"><span className="font-serif text-sm text-[#d4ee75]">0{index + 1}</span><p className="leading-6 text-[#e0ebe3]">{feature}</p></div>)}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16 md:py-20 lg:px-10">
-        <div className="max-w-2xl">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#26734e]">Why clients work with us</p>
-          <h2 className="mt-3 font-serif text-4xl md:text-5xl">Good work, owned end to end.</h2>
-        </div>
-        <div className="mt-9 grid gap-x-12 md:grid-cols-2">
-          {clientBenefits.map(([title, detail], index) => (
-            <div key={title} className="grid grid-cols-[42px_1fr] gap-4 border-t border-[#cbd8cc] py-5">
-              <span className="font-serif text-xl text-[#639174]">0{index + 1}</span>
-              <div><h3 className="font-semibold text-[#17462f]">{title}</h3><p className="mt-1 leading-7 text-[#617167]">{detail}</p></div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-[#e7eee6]">
+      <section id="process" className="scroll-mt-24">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-20 lg:px-10">
           <div className="max-w-2xl">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#26734e]">Project engagement</p>
-            <h2 className="mt-3 font-serif text-4xl md:text-5xl">Support that fits the stage you're at.</h2>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#26734e]">A clear path from idea to release</p>
+            <h2 className="mt-3 font-serif text-4xl md:text-5xl">Our Process</h2>
           </div>
-          <div className="mt-10 grid gap-8 border-t border-[#c6d4c8] pt-7 md:grid-cols-3 md:gap-10">
-            {engagementOptions.map(([title, detail], index) => (
-              <div key={title}>
-                <p className="text-sm font-semibold text-[#639174]">0{index + 1}</p>
-                <h3 className="mt-3 font-serif text-2xl text-[#17462f]">{title}</h3>
-                <p className="mt-3 leading-7 text-[#617167]">{detail}</p>
-              </div>
-            ))}
+          <div className="mt-10 grid border-t border-[#cbd8cc] sm:grid-cols-2 lg:grid-cols-5">
+            {process.map(([title, detail], index) => <article key={title} className="border-b border-[#cbd8cc] py-6 pr-6 lg:border-b-0 lg:border-r lg:px-5 lg:first:pl-0 lg:last:border-r-0"><p className="font-serif text-3xl text-[#df704c]">0{index + 1}</p><h3 className="mt-4 font-semibold text-[#17462f]">{title}</h3><p className="mt-2 text-sm leading-6 text-[#617167]">{detail}</p></article>)}
           </div>
         </div>
       </section>
 
-      <section id="contact" className="bg-[#d4ee75] text-[#18382b]">
+      <section className="bg-[#e9efea]">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20 lg:px-10">
+          <div className="max-w-2xl">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#26734e]">A partner for the whole journey</p>
+            <h2 className="mt-3 font-serif text-4xl md:text-5xl">Why Businesses Choose Awadh Info Solution</h2>
+          </div>
+          <div className="mt-9 grid gap-x-12 md:grid-cols-2">
+            {reasons.map(([title, detail], index) => <div key={title} className="grid grid-cols-[42px_1fr] gap-4 border-t border-[#cbd8cc] py-5"><span className="font-serif text-xl text-[#df704c]">0{index + 1}</span><div><h3 className="font-semibold text-[#17462f]">{title}</h3><p className="mt-1 leading-7 text-[#617167]">{detail}</p></div></div>)}
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className="scroll-mt-24">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-[0.75fr_1.25fr] md:py-20 lg:px-10">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#26734e]">About the company</p>
+            <h2 className="mt-3 font-serif text-4xl leading-tight md:text-5xl">Awadh Info Solution</h2>
+            <p className="mt-5 font-serif text-2xl text-[#17462f]">Shantanu Kumar Kushwaha</p>
+            <p className="mt-2 font-semibold text-[#26734e]">Founder &amp; Software Developer</p>
+            <p className="mt-3 text-sm text-[#617167]">6+ years of professional experience</p>
+          </div>
+          <div className="max-w-3xl text-lg leading-8 text-[#52645a]">
+            <p>We are a founder-led software product development company focused on practical digital solutions for businesses. We take products from requirements and UI implementation through backend integration, payments, notifications, deployment, and ongoing maintenance.</p>
+            <p className="mt-5 text-base leading-7">Our work spans business websites, web applications, mobile products, backend systems, and the support needed to keep them running.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="scroll-mt-24 bg-[#d4ee75] text-[#18382b]">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-14 md:flex-row md:items-end md:justify-between md:px-10 md:py-16">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.16em]">Let's build your next digital product</p>
-            <h2 className="mt-3 max-w-2xl font-serif text-4xl leading-tight md:text-5xl">Have a product or project in mind?</h2>
-            <p className="mt-4">Awadh Info Solution Pvt. Ltd.</p>
-            <a href="mailto:admin@awadhinfosolution.in" className="mt-5 inline-block font-semibold underline underline-offset-4">admin@awadhinfosolution.in</a>
-            <p className="mt-2 text-sm">awadhinfosolution.in</p>
+            <p className="text-xs font-bold uppercase tracking-[0.16em]">Start a conversation</p>
+            <h2 className="mt-3 max-w-2xl font-serif text-4xl leading-tight md:text-5xl">Have an idea for your next digital product?</h2>
+            <p className="mt-4 text-lg">Let’s turn your idea into a working product.</p>
+            <div className="mt-6 flex flex-col gap-2 text-sm sm:flex-row sm:gap-6">
+              <a href="mailto:admin@awadhinfosolution.in" className="font-semibold underline underline-offset-4">admin@awadhinfosolution.in</a>
+              <span>Rourkela, Odisha, India</span>
+            </div>
           </div>
-          <a href="mailto:admin@awadhinfosolution.in" className="inline-flex min-h-12 shrink-0 items-center justify-center bg-[#153f30] px-6 font-semibold text-white transition hover:bg-[#275b45]">Email admin@awadhinfosolution.in <span className="ml-3" aria-hidden="true">↗</span></a>
+          <a href="mailto:admin@awadhinfosolution.in?subject=Start%20a%20project" className="inline-flex min-h-12 shrink-0 items-center justify-center bg-[#153f30] px-6 font-semibold text-white transition hover:bg-[#275b45]">Start Your Project <span className="ml-3" aria-hidden="true">→</span></a>
         </div>
       </section>
     </main>
