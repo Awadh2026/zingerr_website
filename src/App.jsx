@@ -1,9 +1,10 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { AuthProvider } from "./context/AuthContext";
 
 import Home from "./pages/Home";
+import Zingerr from "./pages/Zingerr";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Support from "./pages/Support";
@@ -18,14 +19,27 @@ import AdminOrderDetails from "./pages/AdminOrderDetails";
 import DeliveryOrders from "./pages/DeliveryOrders";
 import Login from "./components/Login";
 
+const siteChromePaths = new Set([
+  "/products/zingerr",
+  "/privacy",
+  "/terms",
+  "/refund-policy",
+  "/support",
+  "/delete-account",
+]);
+
 export default function App() {
+  const { pathname } = useLocation();
+  const showSiteChrome = siteChromePaths.has(pathname);
+
   return (
     <AuthProvider>
       <div className="min-h-screen bg-app-bg text-app-body flex flex-col">
-        <Navbar />
+        {showSiteChrome && <Navbar />}
 
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/products/zingerr" element={<Zingerr />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/support" element={<Support />} />
@@ -41,7 +55,7 @@ export default function App() {
           <Route path="/delivery/orders" element={<DeliveryOrders />} />
         </Routes>
 
-        <Footer />
+        {showSiteChrome && <Footer />}
       </div>
     </AuthProvider>
   );

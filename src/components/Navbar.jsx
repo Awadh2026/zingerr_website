@@ -7,13 +7,9 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   return (
-    <nav className="bg-app-bg text-app-header px-6 py-5 flex items-center justify-between relative border-b-4 border-app-accent">
-      <Link to="/" className="z-20 shrink-0">
-        <img
-          src={zingerrLogo}
-          alt="ZINGERR — Fresh Zing at Door"
-          className="h-16 md:h-[4.5rem] w-auto object-contain"
-        />
+    <nav className="relative z-20 flex items-center justify-between border-b border-app-header/10 bg-app-bg px-6 py-4 text-app-header lg:px-10">
+      <Link to="/" className="shrink-0 leading-tight">
+        <img src={zingerrLogo} alt="Zingerr" className="h-12 w-auto object-contain md:h-14" />
       </Link>
 
       {/* Hamburger Icon */}
@@ -39,8 +35,9 @@ export default function Navbar() {
       </button>
 
       {/* Desktop Menu */}
-      <div className="hidden md:flex space-x-6 items-center font-medium">
-        <Link to="/" className="hover:text-app-accent transition">Home</Link>
+      <div className="hidden md:flex items-center gap-6 font-medium">
+        <Link to="/" className="transition hover:text-app-accent">Home</Link>
+        <Link to="/products/zingerr" className="transition hover:text-app-accent">Zingerr</Link>
         <Link to="/privacy" className="hover:text-app-accent transition">Privacy</Link>
         <Link to="/terms" className="hover:text-app-accent transition">Terms & Conditions</Link>
         <Link to="/refund-policy" className="hover:text-app-accent transition">Refund Policy</Link>
@@ -75,11 +72,12 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 bg-app-bg-muted text-app-header flex flex-col items-center justify-center space-y-8 text-xl transition-all duration-300 md:hidden z-10 border-l-4 border-app-accent ${
+        className={`fixed inset-0 z-10 flex flex-col items-center justify-center space-y-8 border-l-4 border-app-accent bg-app-bg-muted text-xl text-app-header transition-all duration-300 md:hidden ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
         <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+        <Link to="/products/zingerr" onClick={() => setMenuOpen(false)}>Zingerr</Link>
         <Link to="/support" onClick={() => setMenuOpen(false)}>Support</Link>
         <Link to="/privacy" onClick={() => setMenuOpen(false)}>Privacy</Link>
         <Link to="/terms" onClick={() => setMenuOpen(false)}>Terms & Conditions</Link>

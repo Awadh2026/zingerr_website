@@ -1,10 +1,15 @@
+import zingerrLogo from "../assets/zingerr.png";
+
 export default function Footer() {
   return (
     <footer className="bg-app-bg text-app-header py-6 border-t-4 border-app-accent">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-8">
-        <div>
-          <p className="text-lg font-semibold">© 2026 Awadh Info Solution Pvt Ltd</p>
-          <p className="text-sm text-app-body">Connect with us on social and app stores.</p>
+        <div className="flex items-center gap-3 text-center md:text-left">
+          <img src={zingerrLogo} alt="Zingerr" className="h-12 w-auto object-contain" />
+          <div>
+            <p className="text-lg font-semibold">© 2026 Awadh Info Solution Pvt Ltd</p>
+            <p className="text-sm text-app-body">Connect with us on social and app stores.</p>
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-4">
