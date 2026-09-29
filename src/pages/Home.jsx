@@ -83,6 +83,21 @@ export default function Home() {
       addressRegion: "Odisha",
       addressCountry: "IN",
     },
+    areaServed: {
+      "@type": "Country",
+      name: "India",
+    },
+    sameAs: [
+      "https://www.instagram.com/zingerr2026/",
+      "https://x.com/zingerr2026",
+    ],
+    knowsAbout: [
+      "Website development",
+      "Web application development",
+      "Mobile app development",
+      "Backend and API development",
+      "Software deployment and maintenance",
+    ],
     founder: {
       "@type": "Person",
       name: "Shantanu Kumar Kushwaha",
