@@ -51,9 +51,9 @@ export default function Home() {
   const navigate = useNavigate();
 
   useSEO({
-    title: "Awadh Info Solution | Website, Web App & Mobile App Development",
-    description: "Awadh Info Solution provides end-to-end website, web application, mobile app, API development and maintenance services for businesses in India.",
-    keywords: "Awadh Info Solution, software development company, website development, web application development, iOS app development, Android app development, Flutter, API development, MongoDB, AWS, Odisha, India",
+    title: "Awadh Info Solution | Software Products & Digital Solutions",
+    description: "Awadh Info Solution Private Limited is a Rourkela-based software company building digital products and business applications, including Zingerr, a hyperlocal commerce platform.",
+    keywords: "Awadh Info Solution, software product company, Zingerr, hyperlocal commerce platform, digital products, mobile app development, Odisha, India",
     image: new URL(zingerrLogo, window.location.origin).href,
     url: "https://www.awadhinfosolution.in/",
   });
@@ -75,7 +75,7 @@ export default function Home() {
     "@type": "Organization",
     name: "Awadh Info Solution Private Limited",
     url: "https://www.awadhinfosolution.in/",
-    description: "End-to-end website, web application, mobile app, API development, and maintenance services for businesses.",
+    description: "Awadh Info Solution Private Limited builds digital products and business software, including Zingerr, a hyperlocal commerce platform.",
     email: "admin@awadhinfosolution.in",
     address: {
       "@type": "PostalAddress",
@@ -110,20 +110,20 @@ export default function Home() {
       <section className="overflow-hidden bg-[#153f30] text-white">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 py-16 md:grid-cols-[1.15fr_0.85fr] md:py-24 lg:px-10">
           <div>
-            <p className="mb-6 text-xs font-bold uppercase tracking-[0.18em] text-[#d4ee75]">Build. Launch. Grow.</p>
-            <h1 className="max-w-3xl font-serif text-5xl leading-[1.02] md:text-7xl">Turn Your Ideas Into <span className="text-[#d4ee75]">Digital Products</span></h1>
-            <h2 className="mt-7 max-w-2xl text-2xl font-semibold leading-tight md:text-3xl">End-to-End Digital Solutions for Growing Businesses</h2>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#d4e3da]">We design and develop modern websites, web applications, mobile apps, and custom software solutions that help businesses grow digitally.</p>
+            <p className="mb-6 text-xs font-bold uppercase tracking-[0.18em] text-[#d4ee75]">Awadh Info Solution Private Limited · Rourkela, Odisha</p>
+            <h1 className="max-w-3xl font-serif text-5xl leading-[1.02] md:text-7xl">Building useful <span className="text-[#d4ee75]">digital products</span> for everyday business</h1>
+            <h2 className="mt-7 max-w-2xl text-2xl font-semibold leading-tight md:text-3xl">A software company creating connected product experiences</h2>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#d4e3da]">We build and operate digital products that bring customer-facing apps, business operations, payments, and delivery workflows together. Our current product, Zingerr, applies this approach to hyperlocal commerce.</p>
             <div className="mt-9 flex flex-wrap gap-4">
-              <a href="mailto:admin@awadhinfosolution.in?subject=Free%20consultation" className="inline-flex min-h-12 items-center bg-[#d4ee75] px-6 font-semibold text-[#18382b] transition hover:bg-white">Get a Free Consultation <span className="ml-3" aria-hidden="true">↗</span></a>
-              <button type="button" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })} className="inline-flex min-h-12 items-center border border-white/40 px-6 font-semibold text-white transition hover:border-white">View Our Work <span className="ml-3" aria-hidden="true">↓</span></button>
+              <button type="button" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })} className="inline-flex min-h-12 items-center bg-[#d4ee75] px-6 font-semibold text-[#18382b] transition hover:bg-white">Explore Zingerr <span className="ml-3" aria-hidden="true">↓</span></button>
+              <a href="mailto:admin@awadhinfosolution.in?subject=Company%20information%20and%20supporting%20documents" className="inline-flex min-h-12 items-center border border-white/40 px-6 font-semibold text-white transition hover:border-white">Contact the company <span className="ml-3" aria-hidden="true">↗</span></a>
             </div>
           </div>
           <div className="relative border-l border-[#6f9480] py-8 pl-8 md:pl-12">
             <span className="absolute left-0 top-8 h-16 w-1 -translate-x-1/2 bg-[#e87952]" />
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#b4d6bf]">One team, the complete journey</p>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#b4d6bf]">Company snapshot</p>
             <div className="mt-7 space-y-5">
-              {[["01", "Websites & web apps"], ["02", "Mobile products"], ["03", "Backend & integrations"], ["04", "Launch & ongoing support"]].map(([number, label]) => (
+              {[["01", "Software product development"], ["02", "Zingerr hyperlocal commerce app"], ["03", "Customer, delivery & admin workflows"], ["04", "Based in Rourkela, Odisha, India"]].map(([number, label]) => (
                 <div key={number} className="flex items-center gap-4 border-b border-[#557766] pb-4">
                   <span className="font-serif text-sm text-[#d4ee75]">{number}</span>
                   <span className="text-lg font-medium">{label}</span>
@@ -135,18 +135,41 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-b border-[#d8e1d8] bg-white" aria-label="Our capabilities">
+      <section className="border-b border-[#d8e1d8] bg-white" aria-label="Company at a glance">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-5 px-6 py-6 text-sm font-semibold text-[#3b5748] sm:grid-cols-3 lg:grid-cols-5 lg:px-10">
-          {["Website Development", "Web Apps", "Mobile Apps", "API & Backend", "Maintenance"].map((item, index) => <div key={item} className="flex items-center gap-3"><span className="font-serif text-[#df704c]">0{index + 1}</span>{item}</div>)}
+          {["Software products", "Hyperlocal commerce", "Mobile applications", "Integrated workflows", "Rourkela, Odisha"].map((item, index) => <div key={item} className="flex items-center gap-3"><span className="font-serif text-[#df704c]">0{index + 1}</span>{item}</div>)}
         </div>
       </section>
 
       <section className="border-b border-[#d8e1d8] bg-white" aria-label="Experience and availability">
         <div className="mx-auto grid max-w-7xl gap-5 px-6 py-6 text-sm font-semibold text-[#3b5748] sm:grid-cols-2 lg:grid-cols-4 lg:px-10">
-          <span>6+ years of professional experience</span>
-          <a href="https://play.google.com/store/apps/details?id=in.awadhinfosolution.zingerr" target="_blank" rel="noopener noreferrer" className="hover:text-[#26734e]">Production app on Google Play ↗</a>
-          <span>End-to-end product development</span>
-          <span>Rourkela, Odisha</span>
+          <span>Founder-led product development</span>
+          <a href="https://play.google.com/store/apps/details?id=in.awadhinfosolution.zingerr" target="_blank" rel="noopener noreferrer" className="hover:text-[#26734e]">View Zingerr on Google Play ↗</a>
+          <span>Customer-to-delivery workflows</span>
+          <span>Rourkela, Odisha, India</span>
+        </div>
+      </section>
+
+      <section className="border-b border-[#d8e1d8] bg-[#f5f7f4]">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-[0.8fr_1.2fr] md:py-20 lg:px-10">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#26734e]">The product opportunity</p>
+            <h2 className="mt-3 font-serif text-4xl leading-tight md:text-5xl">Make local commerce easier to run</h2>
+          </div>
+          <div className="grid gap-7 sm:grid-cols-2">
+            <article className="border-t border-[#cbd8cc] pt-5">
+              <h3 className="font-semibold text-[#17462f]">The challenge</h3>
+              <p className="mt-3 leading-7 text-[#617167]">Local commerce involves connected steps—from presenting products and taking orders to collecting payments and coordinating delivery. When these steps sit in separate tools, day-to-day operations can become harder to manage.</p>
+            </article>
+            <article className="border-t border-[#cbd8cc] pt-5">
+              <h3 className="font-semibold text-[#17462f]">Our approach</h3>
+              <p className="mt-3 leading-7 text-[#617167]">Zingerr brings product discovery, ordering, checkout, order tracking, delivery workflows, and administration into one digital product, designed to connect the customer and operations experience.</p>
+            </article>
+            <article className="border-t border-[#cbd8cc] pt-5 sm:col-span-2">
+              <h3 className="font-semibold text-[#17462f]">Designed to extend</h3>
+              <p className="mt-3 leading-7 text-[#617167]">The product is built from modular app, backend, payment, notification, and administration components. This gives the team a foundation to improve workflows and adapt the product as business needs evolve.</p>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -203,9 +226,28 @@ export default function Home() {
             <p className="mt-4 max-w-md leading-7 text-[#d4e3da]">Developed by Awadh Info Solution Private Limited, Zingerr is a live product bringing customer ordering, payments, delivery workflows, and administration together.</p>
             <p className="mt-5 text-sm font-semibold text-[#d4ee75]">Flutter · Supabase · Firebase · Razorpay</p>
             <Link to="/products/zingerr" className="mt-7 inline-flex min-h-12 items-center border border-[#b4d6bf] px-5 font-semibold text-white transition hover:bg-white hover:text-[#153f30]">View Zingerr <span className="ml-3" aria-hidden="true">→</span></Link>
+            <a href="https://play.google.com/store/apps/details?id=in.awadhinfosolution.zingerr" target="_blank" rel="noopener noreferrer" className="mt-4 text-sm font-semibold text-[#d4ee75] underline underline-offset-4 hover:text-white">Open the public Google Play listing ↗</a>
           </div>
           <div className="grid content-start gap-x-8 sm:grid-cols-2">
             {zingerrFeatures.map((feature, index) => <div key={feature} className="flex gap-4 border-t border-[#557766] py-5"><span className="font-serif text-sm text-[#d4ee75]">0{index + 1}</span><p className="leading-6 text-[#e0ebe3]">{feature}</p></div>)}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-14 lg:px-10">
+          <div className="flex flex-col gap-7 border border-[#d0dbd1] bg-[#f5f7f4] p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#26734e]">Public product information</p>
+              <h2 className="mt-3 font-serif text-3xl text-[#17462f]">Explore the product and company</h2>
+              <p className="mt-3 leading-7 text-[#617167]">Review the live app listing, product overview, and published policies. For additional company or product documents, contact us directly.</p>
+            </div>
+            <div className="flex shrink-0 flex-col items-start gap-3 text-sm font-semibold">
+              <Link to="/products/zingerr" className="text-[#26734e] underline underline-offset-4 hover:text-[#17462f]">Zingerr product overview ↗</Link>
+              <a href="https://play.google.com/store/apps/details?id=in.awadhinfosolution.zingerr" target="_blank" rel="noopener noreferrer" className="text-[#26734e] underline underline-offset-4 hover:text-[#17462f]">Google Play app listing ↗</a>
+              <Link to="/privacy" className="text-[#26734e] underline underline-offset-4 hover:text-[#17462f]">Privacy policy ↗</Link>
+              <a href="mailto:admin@awadhinfosolution.in?subject=Request%20for%20company%20or%20product%20documents" className="text-[#26734e] underline underline-offset-4 hover:text-[#17462f]">Request supporting documents ↗</a>
+            </div>
           </div>
         </div>
       </section>
