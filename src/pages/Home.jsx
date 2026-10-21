@@ -29,6 +29,15 @@ const zingerrFeatures = [
   "Production deployment and ongoing product maintenance",
 ];
 
+const zingerrBusinessFeatures = [
+  "Restaurant registration and onboarding",
+  "Manage restaurant information and business profiles",
+  "Manage food menus and product listings",
+  "Update prices and item availability",
+  "Manage operating hours and open/closed status",
+  "Reach customers through the Zingerr platform",
+];
+
 const process = [
   ["Requirements", "Understand the business, users, and project scope."],
   ["UI/UX", "Plan the product structure, user flows, and interface."],
@@ -115,7 +124,8 @@ export default function Home() {
             <h2 className="mt-7 max-w-2xl text-2xl font-semibold leading-tight md:text-3xl">A software company creating connected product experiences</h2>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-[#d4e3da]">We build and operate digital products that bring customer-facing apps, business operations, payments, and delivery workflows together. Our current product, Zingerr, applies this approach to hyperlocal commerce.</p>
             <div className="mt-9 flex flex-wrap gap-4">
-              <button type="button" onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })} className="inline-flex min-h-12 items-center bg-[#d4ee75] px-6 font-semibold text-[#18382b] transition hover:bg-white">Explore Zingerr <span className="ml-3" aria-hidden="true">↓</span></button>
+              <Link to="/products/zingerr" className="inline-flex min-h-12 items-center bg-[#d4ee75] px-6 font-semibold text-[#18382b] transition hover:bg-white">Explore Zingerr <span className="ml-3" aria-hidden="true">↗</span></Link>
+              <Link to="/zingerr-business/about" className="inline-flex min-h-12 items-center border border-white/40 px-6 font-semibold text-white transition hover:border-white hover:bg-white/10">Explore Zingerr Business <span className="ml-3" aria-hidden="true">↗</span></Link>
               <a href="mailto:admin@awadhinfosolution.in?subject=Company%20information%20and%20supporting%20documents" className="inline-flex min-h-12 items-center border border-white/40 px-6 font-semibold text-white transition hover:border-white">Contact the company <span className="ml-3" aria-hidden="true">↗</span></a>
             </div>
           </div>
@@ -234,6 +244,35 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="border-t border-[#557766] bg-[#153f30] text-white" aria-labelledby="zingerr-business-heading">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-[0.8fr_1.2fr] md:py-20 lg:px-10">
+          <div className="flex flex-col items-start">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#d4ee75]">Business application · Restaurant partners</p>
+            <div className="mt-7 flex h-24 w-24 items-center justify-center bg-white p-2">
+              <img src={zingerrLogo} alt="Zingerr Business app logo" className="h-full w-full object-contain" />
+            </div>
+            <h2 id="zingerr-business-heading" className="mt-5 font-serif text-5xl">Zingerr Business</h2>
+            <p className="mt-2 text-lg font-semibold text-[#b4d6bf]">Restaurant Partner Application</p>
+            <p className="mt-4 max-w-md leading-7 text-[#d4e3da]">An application for restaurant owners and authorized business partners to manage a restaurant’s presence on the Zingerr platform and connect with customers.</p>
+            <p className="mt-5 text-sm font-semibold text-[#d4ee75]">Feature availability depends on the current app release</p>
+            <Link to="/zingerr-business/about" className="mt-7 inline-flex min-h-12 items-center border border-[#b4d6bf] px-5 font-semibold text-white transition hover:bg-white hover:text-[#153f30]">
+              Explore Zingerr Business <span className="ml-3" aria-hidden="true">→</span>
+            </Link>
+          </div>
+          <div className="grid content-start gap-x-8 sm:grid-cols-2">
+            {zingerrBusinessFeatures.map((feature, index) => (
+              <div key={feature} className="border-t border-[#557766] py-5">
+                <div className="flex gap-4">
+                  <span className="font-serif text-sm text-[#d4ee75]">0{index + 1}</span>
+                  <p className="leading-6 text-[#e0ebe3]">{feature}</p>
+                </div>
+                <p className="ml-8 mt-2 text-xs font-semibold uppercase tracking-wide text-[#b4d6bf]">Planned · release status to confirm</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-6 py-14 lg:px-10">
           <div className="flex flex-col gap-7 border border-[#d0dbd1] bg-[#f5f7f4] p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
@@ -244,6 +283,7 @@ export default function Home() {
             </div>
             <div className="flex shrink-0 flex-col items-start gap-3 text-sm font-semibold">
               <Link to="/products/zingerr" className="text-[#26734e] underline underline-offset-4 hover:text-[#17462f]">Zingerr product overview ↗</Link>
+              <Link to="/zingerr-business/about" className="text-[#26734e] underline underline-offset-4 hover:text-[#17462f]">Zingerr Business for restaurant partners ↗</Link>
               <a href="https://play.google.com/store/apps/details?id=in.awadhinfosolution.zingerr" target="_blank" rel="noopener noreferrer" className="text-[#26734e] underline underline-offset-4 hover:text-[#17462f]">Google Play app listing ↗</a>
               <Link to="/privacy" className="text-[#26734e] underline underline-offset-4 hover:text-[#17462f]">Privacy policy ↗</Link>
               <a href="mailto:admin@awadhinfosolution.in?subject=Request%20for%20company%20or%20product%20documents" className="text-[#26734e] underline underline-offset-4 hover:text-[#17462f]">Request supporting documents ↗</a>

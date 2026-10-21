@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import zingerrLogo from "../assets/zingerr.png";
 
 export default function Footer({ variant = "company" }) {
+  if (variant === "business") return <ZingerrBusinessFooter />;
   return variant === "zingerr" ? <ZingerrFooter /> : <CompanyFooter />;
 }
 
@@ -34,6 +35,10 @@ function CompanyFooter() {
             <li><Link to="/" state={{ scrollTo: "contact" }} className="hover:text-white">Contact</Link></li>
             <li><Link to="/privacy" className="hover:text-white">Privacy Policy</Link></li>
             <li><Link to="/terms" className="hover:text-white">Terms &amp; Conditions</Link></li>
+            <li><Link to="/zingerr-business/about" className="hover:text-white">About Zingerr Business</Link></li>
+            <li><Link to="/zingerr-business/privacy-policy" className="hover:text-white">Zingerr Business Privacy Policy</Link></li>
+            <li><Link to="/zingerr-business/terms-and-conditions" className="hover:text-white">Zingerr Business Terms and Conditions</Link></li>
+            <li><Link to="/support" className="hover:text-white">Support</Link></li>
           </ul>
         </div>
 
@@ -63,6 +68,13 @@ function ZingerrFooter() {
             <p className="text-sm text-app-body">Connect with us on social and app stores.</p>
           </div>
         </div>
+        <nav aria-label="Zingerr customer information" className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
+          <Link to="/privacy" className="hover:text-app-accent">Privacy Policy</Link>
+          <Link to="/terms" className="hover:text-app-accent">Terms &amp; Conditions</Link>
+          <Link to="/refund-policy" className="hover:text-app-accent">Refund Policy</Link>
+          <Link to="/delete-account" className="hover:text-app-accent">Delete Account</Link>
+          <Link to="/support" className="hover:text-app-accent">Support</Link>
+        </nav>
         <div className="flex flex-wrap items-center justify-center gap-4">
           <a href="https://www.instagram.com/zingerr2026?igsh=MWVxczRxN2IzcTlyOA==" target="_blank" rel="noopener noreferrer" aria-label="Awadh Info Solution on Instagram" className="flex items-center gap-2 rounded-full border border-app-accent/30 bg-white px-4 py-2 text-app-body transition hover:border-app-accent">
             <span className="h-5 w-5 text-[#E1306C]"><svg viewBox="0 0 24 24" className="h-full w-full" fill="currentColor" aria-hidden="true"><path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm0 2h10c1.66 0 3 1.34 3 3v10c0 1.66-1.34 3-3 3H7c-1.66 0-3-1.34-3-3V7c0-1.66 1.34-3 3-3zm5 2.25a4.75 4.75 0 1 0 0 9.5 4.75 4.75 0 0 0 0-9.5zm0 2a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5zm4.75-.5a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5z" /></svg></span>
@@ -77,6 +89,26 @@ function ZingerrFooter() {
             <span>Play Store</span>
           </a>
         </div>
+      </div>
+    </footer>
+  );
+}
+
+function ZingerrBusinessFooter() {
+  return (
+    <footer className="border-t-4 border-[#df704c] bg-white py-6 text-[#17462f]">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 px-6 text-center md:flex-row md:text-left lg:px-10">
+        <div>
+          <p className="font-semibold">Zingerr Business</p>
+          <p className="mt-1 text-sm text-[#617167]">© {new Date().getFullYear()} Awadh Info Solution Private Limited</p>
+        </div>
+        <nav aria-label="Zingerr Business information" className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
+          <Link to="/zingerr-business/about" className="hover:text-[#df704c]">About</Link>
+          <Link to="/zingerr-business/privacy-policy" className="hover:text-[#df704c]">Privacy Policy</Link>
+          <Link to="/zingerr-business/terms-and-conditions" className="hover:text-[#df704c]">Terms &amp; Conditions</Link>
+          <Link to="/support" className="hover:text-[#df704c]">Support</Link>
+        </nav>
+        <a href="mailto:support@awadhinfosolution.in" className="text-sm underline underline-offset-4 hover:text-[#df704c]">support@awadhinfosolution.in</a>
       </div>
     </footer>
   );

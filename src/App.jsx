@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Navigate, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { AuthProvider } from "./context/AuthContext";
@@ -17,6 +17,11 @@ import AdminProfiles from "./pages/AdminProfiles";
 import AdminOrders from "./pages/AdminOrders";
 import AdminOrderDetails from "./pages/AdminOrderDetails";
 import DeliveryOrders from "./pages/DeliveryOrders";
+import {
+  ZingerrBusinessAbout,
+  ZingerrBusinessPrivacy,
+  ZingerrBusinessTerms,
+} from "./pages/ZingerrBusiness";
 import Login from "./components/Login";
 
 const siteChromePaths = new Set([
@@ -30,12 +35,17 @@ const siteChromePaths = new Set([
 
 export default function App() {
   const { pathname } = useLocation();
+  const isBusinessPath = pathname.startsWith("/zingerr-business");
   const showSiteChrome = siteChromePaths.has(pathname);
 
   return (
     <AuthProvider>
       <div className="min-h-screen bg-app-bg text-app-body flex flex-col">
-        {showSiteChrome && <Navbar variant="zingerr" />}
+        {isBusinessPath ? (
+          <Navbar variant="business" />
+        ) : showSiteChrome ? (
+          <Navbar variant="zingerr" />
+        ) : null}
 
         <Routes>
           <Route path="/" element={<Home />} />
@@ -45,6 +55,10 @@ export default function App() {
           <Route path="/support" element={<Support />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/delete-account" element={<DeleteAccount />} />
+          <Route path="/zingerr-business" element={<Navigate to="/zingerr-business/about" replace />} />
+          <Route path="/zingerr-business/about" element={<ZingerrBusinessAbout />} />
+          <Route path="/zingerr-business/privacy-policy" element={<ZingerrBusinessPrivacy />} />
+          <Route path="/zingerr-business/terms-and-conditions" element={<ZingerrBusinessTerms />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin/products" element={<AdminProducts />} />
           <Route path="/admin/categories" element={<AdminCategories />} />
@@ -55,7 +69,11 @@ export default function App() {
           <Route path="/delivery/orders" element={<DeliveryOrders />} />
         </Routes>
 
-        {showSiteChrome && <Footer variant="zingerr" />}
+        {isBusinessPath ? (
+          <Footer variant="business" />
+        ) : showSiteChrome ? (
+          <Footer variant="zingerr" />
+        ) : null}
       </div>
     </AuthProvider>
   );

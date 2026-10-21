@@ -33,7 +33,7 @@ export default function Support() {
                   <span className="font-semibold text-app-header">Email:</span> <a href="mailto:support@awadhinfosolution.in" className="underline text-app-body hover:text-app-header">support@awadhinfosolution.in</a>
                 </li>
                 <li>
-                  <span className="font-semibold text-app-header">Phone:</span> +91-9348381179
+                  <span className="font-semibold text-app-header">Phone:</span> +91-8144484270
                 </li>
                 <li>
                   <span className="font-semibold text-app-header">Website:</span> <a href="https://awadhinfosolution.in" className="underline text-app-body hover:text-app-header" target="_blank" rel="noopener noreferrer">awadhinfosolution.in</a>

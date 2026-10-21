@@ -73,8 +73,8 @@ export default function RefundPolicy() {
                   support@awadhinfosolution.in
                 </a>{" "}
                 | Phone:{" "}
-                <a href="tel:+919348381179" className="underline text-app-header">
-                  +91-9348381179
+                <a href="tel:+918144484270" className="underline text-app-header">
+                  +91-8144484270
                 </a>
               </p>
             </div>

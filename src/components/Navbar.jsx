@@ -11,6 +11,7 @@ const sectionLinks = [
 ];
 
 export default function Navbar({ variant = "company" }) {
+  if (variant === "business") return <ZingerrBusinessNavbar />;
   return variant === "zingerr" ? <ZingerrNavbar /> : <CompanyNavbar />;
 }
 
@@ -101,5 +102,57 @@ function ZingerrNavbar() {
         {user && <><Link to="/admin/orders" onClick={() => setMenuOpen(false)}>Orders</Link><button type="button" onClick={() => { logout(); setMenuOpen(false); }}>Sign out</button></>}
       </div>
     </nav>
+  );
+}
+
+function ZingerrBusinessNavbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const businessLinks = [
+    ["Home", "/"],
+    ["About", "/zingerr-business/about"],
+    ["Privacy Policy", "/zingerr-business/privacy-policy"],
+    ["Terms & Conditions", "/zingerr-business/terms-and-conditions"],
+  ];
+
+  return (
+    <header className="border-b-4 border-[#df704c] bg-white text-[#17462f]">
+      <nav className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-6 px-6 lg:px-10" aria-label="Zingerr Business navigation">
+        <Link to="/zingerr-business/about" className="flex items-center gap-3" onClick={() => setMenuOpen(false)}>
+          <img src={zingerrLogo} alt="" className="h-14 w-auto object-contain" />
+          <span className="border-l border-[#dce5dc] pl-3 font-semibold">Business</span>
+        </Link>
+
+        <div className="hidden items-center gap-6 text-sm font-medium md:flex">
+          {businessLinks.map(([label, path]) => (
+            <Link key={path} to={path} className="transition hover:text-[#df704c]">{label}</Link>
+          ))}
+          <Link to="/support" className="transition hover:text-[#df704c]">Support</Link>
+        </div>
+
+        <button
+          type="button"
+          className="inline-flex h-11 w-11 items-center justify-center border border-[#cbd8cc] md:hidden"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={menuOpen}
+          aria-controls="business-mobile-navigation"
+        >
+          <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            {menuOpen ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m6 6 12 12M18 6 6 18" /> : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
+          </svg>
+        </button>
+      </nav>
+
+      {menuOpen && (
+        <div id="business-mobile-navigation" className="border-t border-[#dce5dc] bg-white px-6 py-5 md:hidden">
+          <div className="mx-auto flex max-w-7xl flex-col items-start gap-5 text-base font-medium">
+            {businessLinks.map(([label, path]) => (
+              <Link key={path} to={path} onClick={() => setMenuOpen(false)}>{label}</Link>
+            ))}
+            <Link to="/support" onClick={() => setMenuOpen(false)}>Support</Link>
+          </div>
+        </div>
+      )}
+    </header>
   );
 }

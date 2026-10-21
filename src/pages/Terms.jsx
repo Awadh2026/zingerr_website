@@ -82,7 +82,7 @@ export default function Terms() {
             {/* Section 10 */}
             <div className="mb-8 pb-8 border-b border-app-accent/30">
               <h2 className="text-2xl md:text-3xl font-bold text-app-header mb-4">10. Contact Us</h2>
-              <p className="text-app-body text-sm md:text-base">If you have any questions about these Terms, contact us at <a href="mailto:support@awadhinfosolution.in" className="underline text-app-header">support@awadhinfosolution.in</a> or call <a href="tel:+919348381179" className="underline text-app-header">+91-9348381179</a>. Visit our website: <a href="https://awadhinfosolution.in" className="underline text-app-header" target="_blank" rel="noopener noreferrer">awadhinfosolution.in</a>.</p>
+              <p className="text-app-body text-sm md:text-base">If you have any questions about these Terms, contact us at <a href="mailto:support@awadhinfosolution.in" className="underline text-app-header">support@awadhinfosolution.in</a> or call <a href="tel:+918144484270" className="underline text-app-header">+91-8144484270</a>. Visit our website: <a href="https://awadhinfosolution.in" className="underline text-app-header" target="_blank" rel="noopener noreferrer">awadhinfosolution.in</a>.</p>
             </div>
             {/* Footer */}
             <div className="text-center text-app-body text-xs pt-4">
