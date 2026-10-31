@@ -44,7 +44,7 @@ function CompanyNavbar() {
           <Link to="/" className="transition hover:text-[#df704c]">Home</Link>
           {sectionLinks.map(([label, sectionId]) => <button key={sectionId} type="button" onClick={() => navigateToSection(sectionId)} className="transition hover:text-[#df704c]">{label}</button>)}
           <button type="button" onClick={() => navigateToSection("contact")} className="inline-flex min-h-11 items-center bg-[#153f30] px-5 font-semibold text-white transition hover:bg-[#275b45]">Get Started <span className="ml-2" aria-hidden="true">↗</span></button>
-          {user && <><Link to="/admin/orders" className="transition hover:text-[#df704c]">Orders</Link><button type="button" onClick={() => logout()} className="transition hover:text-[#df704c]">Sign out</button></>}
+          {user && <><Link to="/admin" className="transition hover:text-[#df704c]">Dashboard</Link><button type="button" onClick={() => logout()} className="transition hover:text-[#df704c]">Sign out</button></>}
         </div>
 
         <button type="button" className="inline-flex h-11 w-11 items-center justify-center border border-[#cbd8cc] lg:hidden" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"} aria-expanded={menuOpen} aria-controls="mobile-navigation">
@@ -59,7 +59,7 @@ function CompanyNavbar() {
           <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
           {sectionLinks.map(([label, sectionId]) => <button key={sectionId} type="button" onClick={() => navigateToSection(sectionId)}>{label}</button>)}
           <button type="button" onClick={() => navigateToSection("contact")} className="mt-1 inline-flex min-h-11 items-center bg-[#153f30] px-5 font-semibold text-white">Get Started <span className="ml-2" aria-hidden="true">↗</span></button>
-          {user && <><Link to="/admin/orders" onClick={() => setMenuOpen(false)}>Orders</Link><button type="button" onClick={() => { logout(); setMenuOpen(false); }}>Sign out</button></>}
+          {user && <><Link to="/admin" onClick={() => setMenuOpen(false)}>Dashboard</Link><button type="button" onClick={() => { logout(); setMenuOpen(false); }}>Sign out</button></>}
         </div>
       </div>}
     </header>
@@ -89,7 +89,7 @@ function ZingerrNavbar() {
         <Link to="/refund-policy" className="transition hover:text-app-accent">Refund Policy</Link>
         <Link to="/support" className="transition hover:text-app-accent">Support</Link>
         <Link to="/delete-account" className="transition hover:text-app-accent">Delete Account</Link>
-        {user && <><Link to="/admin/orders" className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">Orders</Link><button type="button" onClick={() => logout()} className="bg-white px-4 py-2 text-sm font-medium text-app-header hover:bg-gray-100">Sign out</button></>}
+        {user && <><Link to="/admin" className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</Link><button type="button" onClick={() => logout()} className="bg-white px-4 py-2 text-sm font-medium text-app-header hover:bg-gray-100">Sign out</button></>}
       </div>
 
       <div className={`fixed inset-0 z-10 flex flex-col items-center justify-center gap-8 border-l-4 border-app-accent bg-app-bg-muted text-xl text-app-header transition-all duration-300 md:hidden ${menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}>
@@ -99,7 +99,7 @@ function ZingerrNavbar() {
         <Link to="/terms" onClick={() => setMenuOpen(false)}>Terms &amp; Conditions</Link>
         <Link to="/refund-policy" onClick={() => setMenuOpen(false)}>Refund Policy</Link>
         <Link to="/delete-account" onClick={() => setMenuOpen(false)}>Delete Account</Link>
-        {user && <><Link to="/admin/orders" onClick={() => setMenuOpen(false)}>Orders</Link><button type="button" onClick={() => { logout(); setMenuOpen(false); }}>Sign out</button></>}
+        {user && <><Link to="/admin" onClick={() => setMenuOpen(false)}>Dashboard</Link><button type="button" onClick={() => { logout(); setMenuOpen(false); }}>Sign out</button></>}
       </div>
     </nav>
   );

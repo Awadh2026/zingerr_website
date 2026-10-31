@@ -23,6 +23,9 @@ import {
   ZingerrBusinessTerms,
 } from "./pages/ZingerrBusiness";
 import Login from "./components/Login";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminFoodBusinessProfiles from "./pages/AdminFoodBusinessProfiles";
+import AdminFoodRestaurants from "./pages/AdminFoodRestaurants";
 
 const siteChromePaths = new Set([
   "/products/zingerr",
@@ -60,6 +63,10 @@ export default function App() {
           <Route path="/zingerr-business/privacy-policy" element={<ZingerrBusinessPrivacy />} />
           <Route path="/zingerr-business/terms-and-conditions" element={<ZingerrBusinessTerms />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/food/business-profiles" element={<AdminFoodBusinessProfiles />} />
+          <Route path="/admin/food/restaurants/:ownerId" element={<AdminFoodRestaurants />} />
+          <Route path="/admin/:section" element={<AdminDashboard />} />
           <Route path="/admin/products" element={<AdminProducts />} />
           <Route path="/admin/categories" element={<AdminCategories />} />
           <Route path="/admin/offers" element={<AdminOffers />} />

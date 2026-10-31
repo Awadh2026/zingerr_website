@@ -185,6 +185,9 @@ export default function AdminProfiles() {
             <p className="text-gray-600 mt-1">Manage verification, roles, and employee codes.</p>
           </div>
           <div className="flex flex-wrap gap-2">
+            <button onClick={() => navigate('/admin')} className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
+              Home
+            </button>
             <button onClick={() => navigate('/admin/categories')} className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">Categories</button>
             <button onClick={() => navigate('/admin/products')} className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">Products</button>
             <button onClick={() => navigate('/admin/offers')} className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">Offers</button>

@@ -74,7 +74,7 @@ export default function Login() {
 
       if (isAdmin) {
         localStorage.setItem('admin_user', JSON.stringify({ ...userRecord, ...profile, role }))
-        navigate('/admin/orders')
+        navigate('/admin')
         return
       }
 
