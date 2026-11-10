@@ -26,6 +26,8 @@ import Login from "./components/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminFoodBusinessProfiles from "./pages/AdminFoodBusinessProfiles";
 import AdminFoodRestaurants from "./pages/AdminFoodRestaurants";
+import AdminFoodOrders from "./pages/AdminFoodOrders";
+import AdminFoodOrderDetails from "./pages/AdminFoodOrderDetails";
 
 const siteChromePaths = new Set([
   "/products/zingerr",
@@ -66,6 +68,8 @@ export default function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/food/business-profiles" element={<AdminFoodBusinessProfiles />} />
           <Route path="/admin/food/restaurants/:ownerId" element={<AdminFoodRestaurants />} />
+          <Route path="/admin/food/orders" element={<AdminFoodOrders />} />
+          <Route path="/admin/food/orders/:id" element={<AdminFoodOrderDetails />} />
           <Route path="/admin/:section" element={<AdminDashboard />} />
           <Route path="/admin/products" element={<AdminProducts />} />
           <Route path="/admin/categories" element={<AdminCategories />} />

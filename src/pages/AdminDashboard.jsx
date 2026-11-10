@@ -1,5 +1,6 @@
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useSEO } from '../hooks/useSEO.jsx'
+import zingerrLogo from "../assets/zingerr.png";
 
 const quickModules = [
   {
@@ -52,7 +53,7 @@ export default function AdminDashboard() {
       <div className="min-h-screen bg-app-bg px-4 py-8 text-app-body md:px-6">
         <div className="mx-auto max-w-5xl">
           <div className="flex items-center justify-between gap-4">
-            <img src="/favicon.svg" alt="Zingerr" className="h-10 w-10 rounded-full bg-white p-1" />
+            <img src={zingerrLogo} alt="Zingerr" className="h-10 w-10 rounded-full bg-white p-1" />
             <button
               type="button"
               onClick={handleLogout}
@@ -141,6 +142,16 @@ export default function AdminDashboard() {
               <h2 className="mt-5 text-xl font-bold text-app-header">Business Profiles</h2>
               <p className="mt-2 text-sm leading-6 text-gray-600">Manage food business owners and their profile details.</p>
               <span className="mt-5 inline-flex font-semibold text-orange-600">Manage Profiles &rarr;</span>
+            </Link>
+
+            <Link
+              to="/admin/food/orders"
+              className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition hover:border-orange-500 hover:shadow-md"
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-500 text-xl font-bold text-white">FO</div>
+              <h2 className="mt-5 text-xl font-bold text-app-header">Orders</h2>
+              <p className="mt-2 text-sm leading-6 text-gray-600">Track food orders, totals, and fulfillment status.</p>
+              <span className="mt-5 inline-flex font-semibold text-orange-600">Manage Orders &rarr;</span>
             </Link>
           </div>
         </div>

@@ -73,7 +73,23 @@ export default function Login() {
       localStorage.removeItem('delivery_partner')
 
       if (isAdmin) {
-        localStorage.setItem('admin_user', JSON.stringify({ ...userRecord, ...profile, role }))
+        const { data: adminSession, error: sessionError } = await supabase.functions.invoke(
+          'fetch-website-admin-session',
+          { body: { user_id: userId.trim(), password } },
+        )
+
+        if (sessionError || typeof adminSession?.token !== 'string') {
+          console.error('Website admin session error:', sessionError)
+          setError('Unable to create an admin session. Please try again.')
+          return
+        }
+
+        localStorage.setItem('admin_user', JSON.stringify({
+          ...userRecord,
+          ...profile,
+          role,
+          session_token: adminSession.token,
+        }))
         navigate('/admin')
         return
       }

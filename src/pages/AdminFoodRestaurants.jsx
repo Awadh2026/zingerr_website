@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../supabase/client'
 import { useSEO } from '../hooks/useSEO.jsx'
@@ -48,6 +48,47 @@ const emptyBankDetails = {
   ifsc_code: '',
 }
 
+const formatOrderCurrency = (value) =>
+  new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 2,
+  }).format(Number(value || 0))
+
+const formatOrderDate = (value) => {
+  if (!value) return '—'
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleString('en-IN')
+}
+
+const formatOrderItems = (items) => {
+  if (!Array.isArray(items)) return '—'
+  return items.map((item) => {
+    const name = item?.product_name || item?.food_name || item?.name || item?.title || 'Item'
+    const quantity = item?.quantity || item?.qty || 1
+    return `${name} × ${quantity}`
+  }).join(', ') || '—'
+}
+
+const getOrderDateKey = (order) => {
+  const value = order?.placed_at || order?.created_at
+  if (!value) return ''
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return ''
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
+const getLastTwoCalendarDateKeys = () => {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const yesterday = new Date(today)
+  yesterday.setDate(yesterday.getDate() - 1)
+  return new Set([getOrderDateKey({ placed_at: today }), getOrderDateKey({ placed_at: yesterday })])
+}
+
 export default function AdminFoodRestaurants() {
   useSEO({
     title: 'Food Restaurants - Awadh Info Solution',
@@ -66,6 +107,11 @@ export default function AdminFoodRestaurants() {
   const [activeMainSection, setActiveMainSection] = useState('profile')
   const [profileData, setProfileData] = useState(emptyProfile)
   const [bankData, setBankData] = useState(emptyBankDetails)
+  const [orders, setOrders] = useState([])
+  const [ordersLoading, setOrdersLoading] = useState(false)
+  const [ordersError, setOrdersError] = useState('')
+  const [ordersStartDate, setOrdersStartDate] = useState('')
+  const [ordersEndDate, setOrdersEndDate] = useState('')
 
   useEffect(() => {
     if (!localStorage.getItem('admin_user')) {
@@ -162,6 +208,83 @@ export default function AdminFoodRestaurants() {
     fetchRestaurant()
   }, [navigate, ownerId])
 
+  useEffect(() => {
+    if (activeMainSection !== 'orders' || !restaurantId) return
+
+    let cancelled = false
+    const fetchOrders = async () => {
+      try {
+        setOrdersLoading(true)
+        setOrdersError('')
+        const adminSession = JSON.parse(localStorage.getItem('admin_user') || '{}')
+        if (!adminSession.session_token) {
+          localStorage.removeItem('admin_user')
+          navigate('/login')
+          return
+        }
+        const { data, error: fetchError } = await supabase.functions.invoke(
+          'fetch-website-food-orders',
+          {
+            body: { action: 'list', restaurant_id: restaurantId },
+            headers: { 'x-website-admin-token': adminSession.session_token },
+          },
+        )
+
+        if (fetchError) throw fetchError
+        if (!Array.isArray(data)) {
+          throw new Error('Restaurant orders returned an unexpected response.')
+        }
+        if (!cancelled) setOrders(data)
+      } catch (err) {
+        console.error('Restaurant food orders fetch error:', err)
+        if (!cancelled) setOrdersError('Failed to load restaurant orders.')
+      } finally {
+        if (!cancelled) setOrdersLoading(false)
+      }
+    }
+
+    fetchOrders()
+    return () => {
+      cancelled = true
+    }
+  }, [activeMainSection, navigate, restaurantId])
+
+  const filteredOrders = useMemo(
+    () => orders.filter((order) => {
+      const orderDate = getOrderDateKey(order)
+      if (!orderDate) return !ordersStartDate && !ordersEndDate
+      return (!ordersStartDate || orderDate >= ordersStartDate) &&
+        (!ordersEndDate || orderDate <= ordersEndDate)
+    }),
+    [orders, ordersEndDate, ordersStartDate],
+  )
+
+  const filteredOrderSales = useMemo(
+    () => filteredOrders.reduce((total, order) => total + Number(order.total_amount || 0), 0),
+    [filteredOrders],
+  )
+
+  const settlement = useMemo(() => {
+    const settlementDates = getLastTwoCalendarDateKeys()
+    const eligibleOrders = orders.filter((order) => {
+      const status = String(order.order_status || '').toLowerCase().replace(/\s+/g, '_')
+      return status !== 'cancelled' && settlementDates.has(getOrderDateKey(order))
+    })
+    const gross = eligibleOrders.reduce(
+      (total, order) => total + Number(order.total_amount || 0),
+      0,
+    )
+    const commissionPercent = Number(formData.commision) || 0
+
+    return {
+      orderCount: eligibleOrders.length,
+      netAmount: gross * (1 - commissionPercent / 100),
+      commissionPercent,
+    }
+  }, [formData.commision, orders])
+
+  const isDeliveryPartner = profileData.role.trim().toLowerCase() === 'delivery_partner'
+
   const setField = (field, value) => {
     setFormData((current) => ({ ...current, [field]: value }))
   }
@@ -185,7 +308,7 @@ export default function AdminFoodRestaurants() {
         .eq('id', ownerId)
 
       if (saveError) throw saveError
-      setActiveMainSection('restaurant')
+      setActiveMainSection(isDeliveryPartner ? 'profile' : 'restaurant')
     } catch (err) {
       console.error('Business profile save error:', err)
       setError('Failed to save the business profile.')
@@ -212,7 +335,7 @@ export default function AdminFoodRestaurants() {
       })
 
       if (saveError) throw saveError
-      setActiveMainSection('restaurant')
+      setActiveMainSection(isDeliveryPartner ? 'bank' : 'restaurant')
     } catch (err) {
       console.error('Bank details save error:', err)
       setError('Failed to save the bank details.')
@@ -282,7 +405,7 @@ export default function AdminFoodRestaurants() {
 
   return (
     <div className="min-h-screen bg-app-bg p-4 text-app-body md:p-6">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-7xl">
         <Link to="/admin/food/business-profiles" className="text-sm font-semibold text-orange-600 hover:underline">&larr; Business Profiles</Link>
         <h1 className="mt-2 text-3xl font-bold text-app-header">Manage Food Business</h1>
         {ownerId && <p className="mt-1 break-all text-sm text-gray-500">Owner ID: {ownerId}</p>}
@@ -296,11 +419,16 @@ export default function AdminFoodRestaurants() {
               <button type="button" role="tab" aria-selected={activeMainSection === 'profile'} onClick={() => setActiveMainSection('profile')} className={`min-w-max px-6 py-4 text-sm font-semibold ${activeMainSection === 'profile' ? 'border-b-2 border-orange-600 text-orange-600' : 'border-b-2 border-transparent text-gray-600'}`}>
                 Profile Section
               </button>
-              <button type="button" role="tab" aria-selected={activeMainSection === 'restaurant'} onClick={() => setActiveMainSection('restaurant')} className={`min-w-max px-6 py-4 text-sm font-semibold ${activeMainSection === 'restaurant' ? 'border-b-2 border-orange-600 text-orange-600' : 'border-b-2 border-transparent text-gray-600'}`}>
-                Restaurant Section
-              </button>
+              {!isDeliveryPartner && (
+                <button type="button" role="tab" aria-selected={activeMainSection === 'restaurant'} onClick={() => setActiveMainSection('restaurant')} className={`min-w-max px-6 py-4 text-sm font-semibold ${activeMainSection === 'restaurant' ? 'border-b-2 border-orange-600 text-orange-600' : 'border-b-2 border-transparent text-gray-600'}`}>
+                  Restaurant Section
+                </button>
+              )}
               <button type="button" role="tab" aria-selected={activeMainSection === 'bank'} onClick={() => setActiveMainSection('bank')} className={`min-w-max px-6 py-4 text-sm font-semibold ${activeMainSection === 'bank' ? 'border-b-2 border-orange-600 text-orange-600' : 'border-b-2 border-transparent text-gray-600'}`}>
                 Bank Section
+              </button>
+              <button type="button" role="tab" aria-selected={activeMainSection === 'orders'} onClick={() => setActiveMainSection('orders')} className={`min-w-max px-6 py-4 text-sm font-semibold ${activeMainSection === 'orders' ? 'border-b-2 border-orange-600 text-orange-600' : 'border-b-2 border-transparent text-gray-600'}`}>
+                Orders
               </button>
             </div>
 
@@ -362,7 +490,7 @@ export default function AdminFoodRestaurants() {
                 </div>
               </form>
             )}
-            {activeMainSection === 'restaurant' && (
+            {!isDeliveryPartner && activeMainSection === 'restaurant' && (
               <form onSubmit={saveRestaurant}>
             <div className="flex overflow-x-auto border-b border-gray-200 bg-gray-50">
               {sections.map(([key, label]) => (
@@ -489,6 +617,96 @@ export default function AdminFoodRestaurants() {
               </button>
             </div>
               </form>
+            )}
+            {activeMainSection === 'orders' && (
+              <div className="p-5">
+                <h2 className="text-xl font-bold text-app-header">Restaurant Orders</h2>
+                {!restaurantId ? (
+                  <p className="mt-4 rounded-md border border-orange-200 bg-orange-50 p-4 text-orange-800">
+                    Save a restaurant profile before viewing its orders.
+                  </p>
+                ) : ordersError ? (
+                  <p className="mt-4 rounded-md border border-red-200 bg-red-50 p-4 text-red-700">{ordersError}</p>
+                ) : (
+                  <>
+                    <div className="mt-4 grid gap-4 rounded-lg border border-gray-200 bg-gray-50 p-4 sm:grid-cols-2 lg:grid-cols-5">
+                      <label className="text-sm font-medium text-gray-700">
+                        From date
+                        <input
+                          type="date"
+                          value={ordersStartDate}
+                          max={ordersEndDate || undefined}
+                          onChange={(event) => setOrdersStartDate(event.target.value)}
+                          className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2"
+                        />
+                      </label>
+                      <label className="text-sm font-medium text-gray-700">
+                        To date
+                        <input
+                          type="date"
+                          value={ordersEndDate}
+                          min={ordersStartDate || undefined}
+                          onChange={(event) => setOrdersEndDate(event.target.value)}
+                          className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2"
+                        />
+                      </label>
+                      <div className="rounded-md bg-white p-3 sm:col-span-1">
+                        <p className="text-sm text-gray-500">Total orders</p>
+                        <p className="mt-1 text-xl font-bold text-app-header">{filteredOrders.length}</p>
+                      </div>
+                      <div className="rounded-md bg-white p-3 sm:col-span-2 lg:col-span-1">
+                        <p className="text-sm text-gray-500">Total sales</p>
+                        <p className="mt-1 text-xl font-bold text-green-700">{formatOrderCurrency(filteredOrderSales)}</p>
+                      </div>
+                      <div className="rounded-md bg-white p-3 sm:col-span-2 lg:col-span-1">
+                        <p className="text-sm text-gray-500">Settlement (last 2 days)</p>
+                        <p className="mt-1 text-xl font-bold text-green-700">{formatOrderCurrency(settlement.netAmount)}</p>
+                        <p className="mt-1 text-xs text-gray-500">
+                          {settlement.orderCount} non-cancelled orders, after {settlement.commissionPercent}% commission
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-4 overflow-x-auto rounded-lg border border-gray-200">
+                    <table className="min-w-full divide-y divide-gray-200">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="px-4 py-3 text-left text-xs font-semibold uppercase text-gray-600">Order</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold uppercase text-gray-600">Customer</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold uppercase text-gray-600">Items</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold uppercase text-gray-600">Amount</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold uppercase text-gray-600">Payment</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold uppercase text-gray-600">Status</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold uppercase text-gray-600">Placed At</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100 bg-white">
+                        {ordersLoading ? (
+                          <tr>
+                            <td colSpan="7" className="px-4 py-8 text-center text-gray-500">Loading restaurant orders...</td>
+                          </tr>
+                        ) : filteredOrders.length === 0 ? (
+                          <tr>
+                            <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
+                              {orders.length === 0 ? 'No orders found for this restaurant.' : 'No orders found in the selected date range.'}
+                            </td>
+                          </tr>
+                        ) : filteredOrders.map((order) => (
+                          <tr key={order.id}>
+                            <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-app-header">{order.order_number || order.id}</td>
+                            <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">{order.user_id || '—'}</td>
+                            <td className="min-w-48 px-4 py-3 text-sm text-gray-700">{formatOrderItems(order.items)}</td>
+                            <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900">{formatOrderCurrency(order.total_amount)}</td>
+                            <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">{order.payment_method || '—'}{order.payment_status ? ` (${order.payment_status})` : ''}</td>
+                            <td className="whitespace-nowrap px-4 py-3 text-sm capitalize text-gray-700">{String(order.order_status || 'placed').replace(/_/g, ' ')}</td>
+                            <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">{formatOrderDate(order.placed_at)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  </>
+                )}
+              </div>
             )}
           </div>
         )}
